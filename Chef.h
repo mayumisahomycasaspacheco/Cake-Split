@@ -12,6 +12,8 @@ private:
 public:
 	Chef();
 	~Chef();
+
+	void cargar_sprite_chef(String^ ruta_sprite_chef);
 };
 
 Chef::Chef()
@@ -24,4 +26,11 @@ Chef::Chef()
 Chef::~Chef()
 {
 	delete sprite_chef;
+}
+
+void Chef::cargar_sprite_chef(String^ ruta_sprite_chef)
+{
+	sprite_chef = gcnew Bitmap(ruta_sprite_chef);
+	ancho = sprite_chef->Width / 3; //Numero de columnas
+	alto = sprite_chef->Height / 4; //Numero de filas
 }
