@@ -70,20 +70,49 @@ namespace CakeSplit {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(782, 553);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->KeyPreview = true;
 			this->MaximizeBox = false;
 			this->Name = L"Form_Game";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Cake Split";
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form_Game::Form_Game_KeyDown);
+			this->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &Form_Game::Form_Game_KeyUp);
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) 
 	{
+		chef->mover(this->ClientSize.Width);
+		
 		Graphics^ graphics = this->CreateGraphics();
 		graphics->Clear(Color::White);
 		chef->dibujar_sprite_chef(graphics);
 		delete graphics;
+	}
+	private: System::Void Form_Game_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) 
+	{
+		if (e->KeyCode == Keys::Left) //Izquierda
+		{
+			chef->cambiar_direccion(Direccion::Izquierda);
+		}
+
+		if (e->KeyCode == Keys::Right)
+		{
+			chef->cambiar_direccion(Direccion::Derecha);
+		}
+	}
+	private: System::Void Form_Game_KeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) 
+	{
+		if (e->KeyCode == Keys::Left)
+		{
+			chef->cambiar_direccion(Direccion::Ninguna);
+		}
+
+		if (e->KeyCode == Keys::Right)
+		{
+			chef->cambiar_direccion(Direccion::Ninguna);
+		}
 	}
 	};
 }
