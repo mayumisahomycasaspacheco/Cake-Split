@@ -1,4 +1,5 @@
 #pragma once
+#include "Chef.h"
 
 namespace CakeSplit {
 
@@ -18,9 +19,9 @@ namespace CakeSplit {
 		Form_Game(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: agregar código de constructor aquí
-			//
+			
+			chef = gcnew Chef();
+			chef->cargar_sprite_chef("sprites/sprite-0001.png");
 		}
 
 	protected:
@@ -34,21 +35,34 @@ namespace CakeSplit {
 				delete components;
 			}
 		}
+	private: System::ComponentModel::IContainer^ components;
+	protected:
+	private: System::Windows::Forms::Timer^ timer1;
 
 	private:
 		/// <summary>
 		/// Variable del diseñador necesaria.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		
+		Chef^ chef;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Método necesario para admitir el Diseñador. No se puede modificar
 		/// el contenido de este método con el editor de código.
 		/// </summary>
+
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
+			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->SuspendLayout();
+			// 
+			// timer1
+			// 
+			this->timer1->Enabled = true;
+			this->timer1->Interval = 30;
+			this->timer1->Tick += gcnew System::EventHandler(this, &Form_Game::timer1_Tick);
 			// 
 			// Form_Game
 			// 
@@ -64,5 +78,12 @@ namespace CakeSplit {
 
 		}
 #pragma endregion
+	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) 
+	{
+		Graphics^ graphics = this->CreateGraphics();
+		graphics->Clear(Color::White);
+		chef->dibujar_sprite_chef(graphics);
+		delete graphics;
+	}
 	};
 }
