@@ -149,6 +149,7 @@
     <ClInclude Include="Form_Menu.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Ingrediente.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form_Game.resx">

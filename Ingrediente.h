@@ -15,6 +15,8 @@ public:
 	~Ingrediente();
 
 	void dibujar_sprite_ingrediente(Graphics^ graphics);
+	void mover();
+	bool salio_de_pantalla(int alto_ventana);
 };
 
 Ingrediente::Ingrediente(int x, int tipo, Bitmap^ sprite_ingrediente)
@@ -30,11 +32,22 @@ Ingrediente::Ingrediente(int x, int tipo, Bitmap^ sprite_ingrediente)
 
 Ingrediente::~Ingrediente()
 {
-	delete sprite_ingrediente;
+	//Destructor vacio
 }
 
 void Ingrediente::dibujar_sprite_ingrediente(Graphics^ graphics)
 {
 	Rectangle origen = Rectangle(0, tipo * alto, ancho, alto);
 	Rectangle destino = Rectangle(x, y, ancho, alto);
+	graphics->DrawImage(sprite_ingrediente, destino, origen, GraphicsUnit::Pixel);
+}
+
+void Ingrediente::mover()
+{
+	y = y + dy;
+}
+
+bool Ingrediente::salio_de_pantalla(int alto_ventana)
+{
+	return y > alto_ventana;
 }
