@@ -19,6 +19,8 @@ namespace CakeSplit {
 		Form_Game(void)
 		{
 			InitializeComponent();
+
+			this->DoubleBuffered = true;
 			
 			chef = gcnew Chef();
 			chef->cargar_sprite_chef("sprites/sprite-0001.png");
@@ -75,6 +77,7 @@ namespace CakeSplit {
 			this->Name = L"Form_Game";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Cake Split";
+			this->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form_Game::Form_Game_Paint);
 			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form_Game::Form_Game_KeyDown);
 			this->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &Form_Game::Form_Game_KeyUp);
 			this->ResumeLayout(false);
@@ -84,11 +87,7 @@ namespace CakeSplit {
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) 
 	{
 		chef->mover(this->ClientSize.Width);
-		
-		Graphics^ graphics = this->CreateGraphics();
-		graphics->Clear(Color::White);
-		chef->dibujar_sprite_chef(graphics);
-		delete graphics;
+		this->Invalidate();
 	}
 	private: System::Void Form_Game_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) 
 	{
@@ -114,5 +113,10 @@ namespace CakeSplit {
 			chef->cambiar_direccion(Direccion::Ninguna);
 		}
 	}
-	};
+	private: System::Void Form_Game_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) 
+	{
+		e->Graphics->Clear(Color::White);
+		chef->dibujar_sprite_chef(e->Graphics);
+	}
+};
 }

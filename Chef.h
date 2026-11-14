@@ -13,6 +13,9 @@ private:
 	Bitmap^ sprite_chef;
 	Direccion direccion;
 	int velocidad;
+	int fila, columna;
+	int escala;
+	int contador;
 public:
 	Chef();
 	~Chef();
@@ -26,10 +29,13 @@ public:
 Chef::Chef()
 {
 	x = 100;
-	y = 100;
+	y = 300;
 	dx = 0;
 	direccion = Direccion::Ninguna; //Empieza en idle
-	velocidad = 5; //Se mueve con una velocidad de 5
+	velocidad = 4; //Se mueve con una velocidad de 3
+	fila = 0;
+	columna = 0;
+	escala = 2;
 }
 
 Chef::~Chef()
@@ -46,8 +52,12 @@ void Chef::cargar_sprite_chef(String^ ruta_sprite_chef)
 
 void Chef::dibujar_sprite_chef(Graphics^ graphics)
 {
-	Rectangle origen = Rectangle(0, 0, ancho, alto);
-	Rectangle destino = Rectangle(x, y, ancho, alto);
+	Rectangle origen = Rectangle(columna * ancho, fila * alto, ancho, alto);
+	Rectangle destino = Rectangle(x, y, ancho * escala, alto * escala);
+
+	graphics->InterpolationMode = System::Drawing::Drawing2D::InterpolationMode::NearestNeighbor;
+	graphics->PixelOffsetMode = System::Drawing::Drawing2D::PixelOffsetMode::Half;
+
 	graphics->DrawImage(sprite_chef, destino, origen, GraphicsUnit::Pixel);
 }
 
@@ -58,16 +68,19 @@ void Chef::cambiar_direccion(Direccion cambiar_direccion)
 	if (direccion == Direccion::Izquierda)
 	{
 		dx = -velocidad;
+		fila = 1;
 	}
 
 	else if (direccion == Direccion::Derecha)
 	{
 		dx = velocidad;
+		fila = 2;
 	}
 
 	else
 	{
 		dx = 0;
+		fila = 0;
 	}
 }
 
@@ -80,8 +93,30 @@ void Chef::mover(int ancho_ventana)
 		x = 0;                                // Lo pego a la pared izquierda
 	}
 
-	if (x + ancho > ancho_ventana)            // ¿Se pasó de la pared derecha? (x + ancho es su lado derecho)
+	if (x + ancho * escala > ancho_ventana)            // ¿Se pasó de la pared derecha? (x + ancho * escala es su lado derecho)
 	{
-		x = ancho_ventana - ancho;            // Lo pego a la pared derecha
+		x = ancho_ventana - ancho * escala;            // Lo pego a la pared derecha
+	}
+
+	if (dx != 0) //Solo se anima si esta caminando
+	{
+		contador = contador + 1;
+
+		if (contador >= 5)
+		{
+			contador = 0;
+			columna = columna + 1;
+
+			if (columna > 2)
+			{
+				columna = 0;
+			}
+		}
+	}
+
+	else
+	{
+		contador = 0;
+		columna = 0;
 	}
 }
