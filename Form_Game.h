@@ -1,5 +1,6 @@
 #pragma once
 #include "Chef.h"
+#include "Controladora.h"
 
 namespace CakeSplit {
 
@@ -24,6 +25,8 @@ namespace CakeSplit {
 			
 			chef = gcnew Chef();
 			chef->cargar_sprite_chef("sprites/sprite-0001.png");
+
+			juego = gcnew Controladora();
 		}
 
 	protected:
@@ -47,6 +50,8 @@ namespace CakeSplit {
 		/// </summary>
 		
 		Chef^ chef;
+	private: System::Windows::Forms::Timer^ timer2;
+		   Controladora^ juego;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -58,6 +63,7 @@ namespace CakeSplit {
 		{
 			this->components = (gcnew System::ComponentModel::Container());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->SuspendLayout();
 			// 
 			// timer1
@@ -65,6 +71,12 @@ namespace CakeSplit {
 			this->timer1->Enabled = true;
 			this->timer1->Interval = 30;
 			this->timer1->Tick += gcnew System::EventHandler(this, &Form_Game::timer1_Tick);
+			// 
+			// timer2
+			// 
+			this->timer2->Enabled = true;
+			this->timer2->Interval = 1000;
+			this->timer2->Tick += gcnew System::EventHandler(this, &Form_Game::timer2_Tick);
 			// 
 			// Form_Game
 			// 
@@ -87,6 +99,9 @@ namespace CakeSplit {
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) 
 	{
 		chef->mover(this->ClientSize.Width);
+		juego->mover();
+		juego->eliminar_fuera_de_la_pantalla(this->ClientSize.Height);
+
 		this->Invalidate();
 	}
 	private: System::Void Form_Game_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) 
@@ -117,6 +132,11 @@ namespace CakeSplit {
 	{
 		e->Graphics->Clear(Color::White);
 		chef->dibujar_sprite_chef(e->Graphics);
+		juego->dibujar(e->Graphics);
 	}
+private: System::Void timer2_Tick(System::Object^ sender, System::EventArgs^ e) 
+{
+	juego->crear_ingrediente(this->ClientSize.Width);
+}
 };
 }

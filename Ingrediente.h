@@ -24,7 +24,7 @@ Ingrediente::Ingrediente(int x, int tipo, Bitmap^ sprite_ingrediente)
 	this->x = x;
 	this->tipo = tipo;
 	this->sprite_ingrediente = sprite_ingrediente;
-	y = 30;
+	y = -alto;
 	ancho = sprite_ingrediente->Width / 1;
 	alto = sprite_ingrediente->Height / 4;
 	dy = 3;

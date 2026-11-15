@@ -19,6 +19,8 @@ public:
 
 	void crear_ingrediente(int ancho_ventana);
 	void dibujar(Graphics^ graphics);
+	void mover();
+	void eliminar_fuera_de_la_pantalla(int alto_ventana);
 };
 
 Controladora::Controladora()
@@ -38,7 +40,10 @@ Controladora::~Controladora()
 
 void Controladora::crear_ingrediente(int ancho_ventana)
 {
-	ingredientes->Add(gcnew Ingrediente(300, 2, sprite_ingrediente));
+	int x = azar->Next(0, ancho_ventana - sprite_ingrediente->Width);
+	int tipo = azar->Next(0, 4);
+
+	ingredientes->Add(gcnew Ingrediente(x, tipo, sprite_ingrediente));
 }
 
 void Controladora::dibujar(Graphics^ graphics)
@@ -46,5 +51,24 @@ void Controladora::dibujar(Graphics^ graphics)
 	for (int i = 0; i < ingredientes->Count; i++)
 	{
 		ingredientes[i]->dibujar_sprite_ingrediente(graphics);
+	}
+}
+
+void Controladora::mover()
+{
+	for (int i = 0; i < ingredientes->Count; i++)
+	{
+		ingredientes[i]->mover();
+	}
+}
+
+void Controladora::eliminar_fuera_de_la_pantalla(int alto_ventana)
+{
+	for (int i = ingredientes->Count - 1; i >= 0; i--)
+	{
+		if (ingredientes[i]->salio_de_pantalla(alto_ventana))
+		{
+			ingredientes->RemoveAt(i);
+		}
 	}
 }
