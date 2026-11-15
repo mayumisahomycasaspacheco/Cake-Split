@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chef.h" />
+    <ClInclude Include="Controladora.h" />
     <ClInclude Include="Form_Game.h">
       <FileType>CppForm</FileType>
     </ClInclude>
