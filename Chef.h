@@ -24,18 +24,20 @@ public:
 	void dibujar_sprite_chef(Graphics^ graphics);
 	void cambiar_direccion(Direccion cambiar_direccion);
 	void mover(int ancho_ventana);
+
+	Rectangle area_captura();
 };
 
 Chef::Chef()
 {
-	x = 100;
+	x = 200;
 	y = 300;
 	dx = 0;
 	direccion = Direccion::Ninguna; //Empieza en idle
 	velocidad = 4; //Se mueve con una velocidad de 3
 	fila = 0;
 	columna = 0;
-	escala = 2;
+	escala = 3;
 }
 
 Chef::~Chef()
@@ -119,4 +121,9 @@ void Chef::mover(int ancho_ventana)
 		contador = 0;
 		columna = 0;
 	}
+}
+
+Rectangle Chef::area_captura()
+{
+	return Rectangle(x, y, ancho * , alto * );
 }

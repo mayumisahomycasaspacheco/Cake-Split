@@ -19,8 +19,11 @@ public:
 
 	void crear_ingrediente(int ancho_ventana);
 	void dibujar(Graphics^ graphics);
-	void mover();
+	void mover(int ancho_ventana);
+	void cambiar_direccion_chef(Direccion direccion);
 	void eliminar_fuera_de_la_pantalla(int alto_ventana);
+
+	void atrapar_ingredientes();
 };
 
 Controladora::Controladora()
@@ -40,7 +43,7 @@ Controladora::~Controladora()
 
 void Controladora::crear_ingrediente(int ancho_ventana)
 {
-	int x = azar->Next(0, ancho_ventana - sprite_ingrediente->Width);
+	int x = azar->Next(0, ancho_ventana - sprite_ingrediente->Width * 3);
 	int tipo = azar->Next(0, 4);
 
 	ingredientes->Add(gcnew Ingrediente(x, tipo, sprite_ingrediente));
@@ -48,14 +51,23 @@ void Controladora::crear_ingrediente(int ancho_ventana)
 
 void Controladora::dibujar(Graphics^ graphics)
 {
+	chef->dibujar_sprite_chef(graphics);
+	
 	for (int i = 0; i < ingredientes->Count; i++)
 	{
 		ingredientes[i]->dibujar_sprite_ingrediente(graphics);
 	}
 }
 
-void Controladora::mover()
+void Controladora::cambiar_direccion_chef(Direccion direccion)
 {
+	chef->cambiar_direccion(direccion);
+}
+
+void Controladora::mover(int ancho_ventana)
+{
+	chef->mover(ancho_ventana);
+	
 	for (int i = 0; i < ingredientes->Count; i++)
 	{
 		ingredientes[i]->mover();

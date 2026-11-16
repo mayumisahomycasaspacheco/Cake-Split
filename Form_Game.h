@@ -23,9 +23,6 @@ namespace CakeSplit {
 
 			this->DoubleBuffered = true;
 			
-			chef = gcnew Chef();
-			chef->cargar_sprite_chef("sprites/sprite-0001.png");
-
 			juego = gcnew Controladora();
 		}
 
@@ -49,7 +46,6 @@ namespace CakeSplit {
 		/// Variable del diseñador necesaria.
 		/// </summary>
 		
-		Chef^ chef;
 	private: System::Windows::Forms::Timer^ timer2;
 		   Controladora^ juego;
 
@@ -98,8 +94,7 @@ namespace CakeSplit {
 #pragma endregion
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) 
 	{
-		chef->mover(this->ClientSize.Width);
-		juego->mover();
+		juego->mover(this->ClientSize.Width);
 		juego->eliminar_fuera_de_la_pantalla(this->ClientSize.Height);
 
 		this->Invalidate();
@@ -108,30 +103,29 @@ namespace CakeSplit {
 	{
 		if (e->KeyCode == Keys::Left) //Izquierda
 		{
-			chef->cambiar_direccion(Direccion::Izquierda);
+			juego->cambiar_direccion_chef(Direccion::Izquierda);
 		}
 
 		if (e->KeyCode == Keys::Right)
 		{
-			chef->cambiar_direccion(Direccion::Derecha);
+			juego->cambiar_direccion_chef(Direccion::Derecha);
 		}
 	}
 	private: System::Void Form_Game_KeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) 
 	{
 		if (e->KeyCode == Keys::Left)
 		{
-			chef->cambiar_direccion(Direccion::Ninguna);
+			juego->cambiar_direccion_chef(Direccion::Ninguna);
 		}
 
 		if (e->KeyCode == Keys::Right)
 		{
-			chef->cambiar_direccion(Direccion::Ninguna);
+			juego->cambiar_direccion_chef(Direccion::Ninguna);
 		}
 	}
 	private: System::Void Form_Game_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) 
 	{
 		e->Graphics->Clear(Color::White);
-		chef->dibujar_sprite_chef(e->Graphics);
 		juego->dibujar(e->Graphics);
 	}
 private: System::Void timer2_Tick(System::Object^ sender, System::EventArgs^ e) 
