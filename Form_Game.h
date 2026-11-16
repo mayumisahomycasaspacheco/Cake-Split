@@ -28,7 +28,7 @@ namespace CakeSplit {
 
 	protected:
 		/// <summary>
-		/// Limpiar los recursos que se estén usando.
+		/// Limpiar los recursos que se estan usando.
 		/// </summary>
 		~Form_Game()
 		{
@@ -43,21 +43,23 @@ namespace CakeSplit {
 
 	private:
 		/// <summary>
-		/// Variable del diseñador necesaria.
+		/// Variable del disemador necesaria.
 		/// </summary>
 
 	private: System::Windows::Forms::Timer^ timer2;
 		   Controladora^ juego;
+		   Bitmap^ fondo;
 
 #pragma region Windows Form Designer generated code
 		   /// <summary>
-		   /// Método necesario para admitir el Diseñador. No se puede modificar
-		   /// el contenido de este método con el editor de código.
+		   /// Metodo necesario para admitir el Disenador. No se puede modificar
+		   /// el contenido de este metodo con el editor de codigo.
 		   /// </summary>
 
 		   void InitializeComponent(void)
 		   {
 			   this->components = (gcnew System::ComponentModel::Container());
+			   System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Form_Game::typeid));
 			   this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			   this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
 			   this->SuspendLayout();
@@ -78,7 +80,10 @@ namespace CakeSplit {
 			   // 
 			   this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			   this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			   this->ClientSize = System::Drawing::Size(782, 553);
+			   this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
+			   this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			   this->ClientSize = System::Drawing::Size(780, 600);
+			   this->DoubleBuffered = true;
 			   this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			   this->KeyPreview = true;
 			   this->MaximizeBox = false;
@@ -136,7 +141,9 @@ namespace CakeSplit {
 	}
 	private: System::Void Form_Game_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e)
 	{
-		e->Graphics->Clear(Color::White);
+		// Modo nitido: los pixeles del fondo se agrandan sin verse borrosos
+		e->Graphics->InterpolationMode = System::Drawing::Drawing2D::InterpolationMode::NearestNeighbor;
+		e->Graphics->PixelOffsetMode = System::Drawing::Drawing2D::PixelOffsetMode::Half;
 		juego->dibujar(e->Graphics);
 	}
 	private: System::Void timer2_Tick(System::Object^ sender, System::EventArgs^ e)

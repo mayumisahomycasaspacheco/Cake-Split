@@ -9,5 +9,5 @@ int main(array<String^>^ args)
 {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
-	Application::Run(gcnew CakeSplit::Form_Game());
+	Application::Run(gcnew CakeSplit::Form_Menu());
 }
