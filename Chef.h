@@ -125,5 +125,5 @@ void Chef::mover(int ancho_ventana)
 
 Rectangle Chef::area_captura()
 {
-	return Rectangle(x, y, ancho * , alto * );
+	return Rectangle(x, y, ancho * escala, alto * escala);
 }

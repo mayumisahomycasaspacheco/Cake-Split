@@ -13,6 +13,7 @@ private:
 	List<Ingrediente^>^ ingredientes;
 	Bitmap^ sprite_ingrediente;
 	Random^ azar;
+	array<bool>^ tengo;
 public:
 	Controladora();
 	~Controladora();
@@ -22,7 +23,7 @@ public:
 	void mover(int ancho_ventana);
 	void cambiar_direccion_chef(Direccion direccion);
 	void eliminar_fuera_de_la_pantalla(int alto_ventana);
-
+	bool gano();
 	void atrapar_ingredientes();
 };
 
@@ -30,7 +31,7 @@ Controladora::Controladora()
 {
 	chef = gcnew Chef(); //Crea un chef y guárdalo en mi caja chef
 	chef->cargar_sprite_chef("sprites/Sprite-0001.png"); //Chef, carga tu dibujo desde este archivo
-
+	tengo = gcnew array<bool>(4);
 	ingredientes = gcnew List<Ingrediente^>(); //Crea una lista vacía para guardar ingredientes. Ahora no hay ninguno
 	azar = gcnew Random(); //Consigue un dado para sacar números al azar
 	sprite_ingrediente = gcnew Bitmap("sprites/Sprite-0002.png"); //Abre el dibujo de los ingredientes y guárdalo
@@ -52,7 +53,7 @@ void Controladora::crear_ingrediente(int ancho_ventana)
 void Controladora::dibujar(Graphics^ graphics)
 {
 	chef->dibujar_sprite_chef(graphics);
-	
+
 	for (int i = 0; i < ingredientes->Count; i++)
 	{
 		ingredientes[i]->dibujar_sprite_ingrediente(graphics);
@@ -67,7 +68,7 @@ void Controladora::cambiar_direccion_chef(Direccion direccion)
 void Controladora::mover(int ancho_ventana)
 {
 	chef->mover(ancho_ventana);
-	
+
 	for (int i = 0; i < ingredientes->Count; i++)
 	{
 		ingredientes[i]->mover();
@@ -83,4 +84,28 @@ void Controladora::eliminar_fuera_de_la_pantalla(int alto_ventana)
 			ingredientes->RemoveAt(i);
 		}
 	}
+}
+
+void Controladora::atrapar_ingredientes()
+{
+	for (int i = ingredientes->Count - 1; i >= 0; i--)
+	{
+		if (chef->area_captura().IntersectsWith(ingredientes[i]->area_colision()))
+		{
+			tengo[ingredientes[i]->obtener_tipo()] = true;
+			ingredientes->RemoveAt(i);
+		}
+	}
+}
+
+bool Controladora::gano()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (!tengo[i])
+		{
+			return false;
+		}
+	}
+	return true;
 }

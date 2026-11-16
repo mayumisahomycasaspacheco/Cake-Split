@@ -18,6 +18,7 @@ public:
 	void dibujar_sprite_ingrediente(Graphics^ graphics);
 	void mover();
 	bool salio_de_pantalla(int alto_ventana);
+	int obtener_tipo();
 
 	Rectangle area_colision();
 };
@@ -63,4 +64,9 @@ bool Ingrediente::salio_de_pantalla(int alto_ventana)
 Rectangle Ingrediente::area_colision()
 {
 	return Rectangle(x, y, ancho * escala, alto * escala);
+}
+
+int Ingrediente::obtener_tipo()
+{
+	return tipo;
 }
