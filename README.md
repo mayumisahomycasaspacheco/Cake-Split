@@ -8,6 +8,12 @@ A pixel-art catching game where a baker puts a split cake back together, one ing
 2. Download the .zip and extract it (keep the `sprites` folder next to the .exe).
 3. Open `Cake-Split.exe` and play.
 
+## Features
+- **Main menu:** Play and Exit buttons.
+- **Falling ingredients:** random type and position, one new ingredient every second.
+- **Animated baker:** walking animation in both directions.
+- **SPLIT theme:** the cake starts out split into pieces, and you put it back together by catching them.
+
 ## How to play
 - Move the baker with the **← →** arrow keys.
 - Ingredients fall from the sky: egg, flour, strawberry and chocolate.
