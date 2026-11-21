@@ -5,8 +5,9 @@ A pixel-art catching game where a baker puts a split cake back together, one ing
 
 ## How to run it
 1. Go to the Releases section of this repository.
-2. Download the .zip and extract it (keep the `sprites` folder next to the .exe).
-3. Open `Cake-Split.exe` and play.
+2. Download `Cake-Split.zip`.
+3. Right-click it and choose **Extract All...** (don't run the .exe from inside the zip).
+4. Open the extracted `Cake-Split` folder and run `Cake-Split.exe`.
 
 ## Features
 - **Main menu:** Play and Exit buttons.
